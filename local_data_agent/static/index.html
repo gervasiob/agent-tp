@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local Data Agent</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="panel setup" id="setupPanel">
+      <div>
+        <p class="eyebrow">Agente local con LangChain</p>
+        <h1>Conectá datos locales sin enviar credenciales al LLM</h1>
+        <p>Elegí una base de datos o una carpeta. La conexión queda guardada solo en esta máquina.</p>
+      </div>
+      <form id="connectForm" class="card">
+        <label>Nombre
+          <input required name="name" placeholder="Facturas 2026" />
+        </label>
+        <label>Tipo
+          <select name="type" id="connectionType">
+            <option value="database">Base de datos</option>
+            <option value="folder">Carpeta de archivos</option>
+          </select>
+        </label>
+        <label id="databaseField">URI SQLAlchemy
+          <input name="database_uri" placeholder="sqlite:////ruta/local.db" autocomplete="off" />
+        </label>
+        <label id="folderField" hidden>Carpeta local
+          <input name="folder_path" placeholder="/Users/tu_usuario/documentos/facturas" />
+        </label>
+        <div class="actions">
+          <button type="submit">Guardar conexión local</button>
+          <button type="button" id="demoButton" class="secondary">Usar demo de facturas</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel chat" id="chatPanel" hidden>
+      <header class="chatHeader">
+        <div>
+          <p class="eyebrow">Chat de análisis</p>
+          <h2 id="connectionTitle">Sin conexión</h2>
+        </div>
+        <div class="actions">
+          <button id="handsFreeButton" class="secondary">Modo audio</button>
+          <button id="disconnectButton" class="ghost">Cambiar conexión</button>
+        </div>
+      </header>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <form id="chatForm" class="composer">
+        <button type="button" id="micButton" class="round" aria-label="Hablar">🎙️</button>
+        <input id="messageInput" placeholder="Preguntá: ¿cuánto IVA tengo que pagar?" autocomplete="off" />
+        <select id="exportFormat" title="Exportar respuesta">
+          <option value="">Sin descarga</option>
+          <option value="csv">CSV</option>
+          <option value="xlsx">Excel</option>
+          <option value="pdf">PDF</option>
+        </select>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
